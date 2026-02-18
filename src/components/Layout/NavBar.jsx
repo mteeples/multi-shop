@@ -31,7 +31,7 @@ export default function NavBar() {
                 <a href="/" className="nav-item nav-link active">
                   Home
                 </a>
-                <a href="shop.html" className="nav-item nav-link">
+                <a href="/categories" className="nav-item nav-link">
                   Shop
                 </a>
                 <a href="detail.html" className="nav-item nav-link">
