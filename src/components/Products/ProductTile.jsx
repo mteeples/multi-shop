@@ -10,15 +10,10 @@ function getFullPrice(price, discountPercentage) {
   return formatPrice(fullPrice);
 }
 
-export default function ProductTile({
-  product,
-  colLg = 3,
-  colMd = 4,
-  colSm = 6,
-}) {
+export default function ProductTile({ product, ...props }) {
   const { title, price, discountPercentage, thumbnail } = product;
   return (
-    <div className={`col-lg-${colLg} col-md-${colMd} col-sm-${colSm} pb-1`}>
+    <div {...props}>
       <div className="product-item bg-light mb-4">
         <div className="product-img position-relative overflow-hidden">
           <img className="img-fluid w-100" src={thumbnail} alt={title} />
