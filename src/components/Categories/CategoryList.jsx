@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { formatCategory } from "./CategoryMenu";
+import { formatCategory } from "../../utils/formatCategory";
 
 export default function CategoryList() {
   const [categories, setCategories] = useState([]);
