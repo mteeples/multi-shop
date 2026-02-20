@@ -1,9 +1,4 @@
-function formatPrice(price) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(price);
-}
+import { formatPrice } from "../../utils/formatPrice";
 
 function getFullPrice(price, discountPercentage) {
   const fullPrice = price / (1 - discountPercentage / 100);
