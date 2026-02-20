@@ -3,6 +3,7 @@ import CategoryList from "./components/Categories/CategoryList";
 import FeaturedProducts from "./components/Products/FeaturedProducts";
 import ProductsByCategory from "./components/Products/ProductsByCategory";
 import ProductsSidebar from "./components/Products/ProductsSidebar";
+import ProductDetail from "./components/Products/ProductDetail";
 import Container from "./components/Layout/Container";
 
 function App() {
@@ -21,6 +22,12 @@ function App() {
             </Container>
           </Container>
         )}
+        {window.location.pathname.startsWith("/products/") &&
+          !window.location.pathname.startsWith("/products/category/") && (
+            <ProductDetail
+              productId={window.location.pathname.split("/").pop()}
+            />
+          )}
       </Layout>
     </>
   );
