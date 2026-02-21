@@ -24,7 +24,6 @@ export default function CategoryList() {
         })
         .filter((cat) => cat.numProducts > 0);
 
-      console.log(catInfo);
       setCategories(catInfo);
     }
     getCategories();

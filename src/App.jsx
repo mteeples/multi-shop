@@ -5,10 +5,11 @@ import ProductsByCategory from "./components/Products/ProductsByCategory";
 import ProductsSidebar from "./components/Products/ProductsSidebar";
 import ProductDetail from "./components/Products/ProductDetail";
 import Container from "./components/Layout/Container";
+import { ProductContextProvider } from "./store/product-context";
 
 function App() {
   return (
-    <>
+    <ProductContextProvider>
       <Layout>
         {window.location.pathname === "/" && <FeaturedProducts />}
         {window.location.pathname === "/categories" && <CategoryList />}
@@ -29,7 +30,7 @@ function App() {
             />
           )}
       </Layout>
-    </>
+    </ProductContextProvider>
   );
 }
 
