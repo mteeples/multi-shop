@@ -1,33 +1,9 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import { formatCategory } from "../../utils/formatCategory";
+import { ProductContext } from "../../store/product-context";
 
 export default function CategoryList() {
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    async function getCategories() {
-      const catNames = await fetch(
-        "https://dummyjson.com/products/category-list",
-      ).then((res) => res.json());
-
-      const products = await fetch("https://dummyjson.com/products?limit=0")
-        .then((res) => res.json())
-        .then((data) => data.products);
-
-      const catInfo = catNames
-        .map((cat) => {
-          const catProducts = products.filter((prod) => prod.category === cat);
-          return {
-            ...catProducts[0],
-            numProducts: catProducts.length,
-          };
-        })
-        .filter((cat) => cat.numProducts > 0);
-
-      setCategories(catInfo);
-    }
-    getCategories();
-  }, []);
+  const { getCategories, getProductsByCategory } = useContext(ProductContext);
 
   return (
     <div className="container-fluid pt-5">
@@ -35,7 +11,8 @@ export default function CategoryList() {
         <span className="bg-secondary pr-3">Categories</span>
       </h2>
       <div className="row px-xl-5 pb-3">
-        {categories.map(({ category, numProducts, thumbnail, title }) => {
+        {getCategories().map(({ category, thumbnail }) => {
+          const allProds = getProductsByCategory(category);
           return (
             <div key={category} className="col-lg-3 col-md-4 col-sm-6 pb-1">
               <a
@@ -47,11 +24,13 @@ export default function CategoryList() {
                     className="overflow-hidden"
                     style={{ width: "100px", height: "100px" }}
                   >
-                    <img className="img-fluid" src={thumbnail} alt={title} />
+                    <img className="img-fluid" src={thumbnail} alt={category} />
                   </div>
                   <div className="flex-fill pl-3">
                     <h6>{formatCategory(category)}</h6>
-                    <small className="text-body">{numProducts} Products</small>
+                    <small className="text-body">
+                      {allProds.length} Products
+                    </small>
                   </div>
                 </div>
               </a>
