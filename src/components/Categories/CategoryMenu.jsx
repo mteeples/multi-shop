@@ -1,14 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { formatCategory } from "../../utils/formatCategory";
+import { ProductContext } from "../../store/product-context";
 
 export default function CategoryMenu() {
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    fetch("https://dummyjson.com/products/category-list")
-      .then((res) => res.json())
-      .then((data) => setCategories(data));
-  }, []);
+  const { getCategories } = useContext(ProductContext);
 
   return (
     <div className="col-lg-3 d-none d-lg-block">
@@ -29,14 +24,14 @@ export default function CategoryMenu() {
         style={{ width: `calc(100% - 30px)`, zIndex: 999 }}
       >
         <div className="navbar-nav w-100">
-          {categories.map((cat) => {
+          {getCategories().map(({ category }) => {
             return (
               <a
-                key={cat}
-                href={`/products/category/${cat}`}
+                key={category}
+                href={`/products/category/${category}`}
                 className="nav-item nav-link"
               >
-                {formatCategory(cat)}
+                {formatCategory(category)}
               </a>
             );
           })}

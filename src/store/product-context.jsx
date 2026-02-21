@@ -52,15 +52,14 @@ export function ProductContextProvider({ children }) {
     uniqueCats.sort();
 
     // For each unique value, return data for first product
-    return uniqueCats
-      .map((cat) => {
-        const firstProd = products.filter((prod) => prod.category === cat)[0];
-        return {
-          id: firstProd.id,
-          thumbnail: firstProd.thumbnail,
-        };
-      })
-      .filter((cat) => cat.numProducts > 0);
+    return uniqueCats.map((cat) => {
+      const firstProd = products.filter((prod) => prod.category === cat)[0];
+      return {
+        id: firstProd.id,
+        thumbnail: firstProd.thumbnail,
+        category: cat,
+      };
+    });
   }
 
   function getProductsByCategory(category) {
