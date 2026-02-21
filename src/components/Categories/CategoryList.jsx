@@ -3,7 +3,7 @@ import { formatCategory } from "../../utils/formatCategory";
 import { ProductContext } from "../../store/product-context";
 
 export default function CategoryList() {
-  const { getCategories, getProductsByCategory } = useContext(ProductContext);
+  const { getCategories } = useContext(ProductContext);
 
   return (
     <div className="container-fluid pt-5">
@@ -11,8 +11,7 @@ export default function CategoryList() {
         <span className="bg-secondary pr-3">Categories</span>
       </h2>
       <div className="row px-xl-5 pb-3">
-        {getCategories().map(({ category, thumbnail }) => {
-          const allProds = getProductsByCategory(category);
+        {getCategories().map(({ category, numProducts, thumbnail, title }) => {
           return (
             <div key={category} className="col-lg-3 col-md-4 col-sm-6 pb-1">
               <a
@@ -24,13 +23,11 @@ export default function CategoryList() {
                     className="overflow-hidden"
                     style={{ width: "100px", height: "100px" }}
                   >
-                    <img className="img-fluid" src={thumbnail} alt={category} />
+                    <img className="img-fluid" src={thumbnail} alt={title} />
                   </div>
                   <div className="flex-fill pl-3">
                     <h6>{formatCategory(category)}</h6>
-                    <small className="text-body">
-                      {allProds.length} Products
-                    </small>
+                    <small className="text-body">{numProducts} Products</small>
                   </div>
                 </div>
               </a>

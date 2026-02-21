@@ -45,6 +45,11 @@ export function ProductContextProvider({ children }) {
   }, [products]);
 
   function getCategories() {
+    // Instructions asked for an id and image for each category.
+    // I chose to return all data for a product in the given category as well as the total number of products.
+    // This allows this function to be used in CategoryList without also calling getProductsByCategory().length
+    // to get the number of products within the component.
+
     // Pull category field and get unique values
     const allCats = products.map((prod) => prod.category);
     const catSet = new Set(allCats);
@@ -53,11 +58,10 @@ export function ProductContextProvider({ children }) {
 
     // For each unique value, return data for first product
     return uniqueCats.map((cat) => {
-      const firstProd = products.filter((prod) => prod.category === cat)[0];
+      const catProducts = getProductsByCategory(cat);
       return {
-        id: firstProd.id,
-        thumbnail: firstProd.thumbnail,
-        category: cat,
+        ...catProducts[0],
+        numProducts: catProducts.length,
       };
     });
   }
