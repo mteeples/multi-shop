@@ -75,7 +75,7 @@ export function ProductContextProvider({ children }) {
   }
 
   function getProduct(productId) {
-    return products.filter((prod) => prod.id === productId)[0];
+    return products.filter((prod) => prod.id.toString() === productId)[0];
   }
 
   const ctxVal = {

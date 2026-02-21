@@ -1,15 +1,11 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import { formatPrice } from "../../utils/formatPrice";
+import { ProductContext } from "../../store/product-context";
 
 export default function ProductDetail({ productId }) {
-  const [product, setProduct] = useState({});
-  const { title, description, price, images } = product;
-
-  useEffect(() => {
-    fetch(`https://dummyjson.com/products/${productId}`)
-      .then((res) => res.json())
-      .then(setProduct);
-  }, []);
+  const { getProduct } = useContext(ProductContext);
+  console.log(getProduct(productId));
+  const { title, description, price, images } = getProduct(productId);
 
   return (
     <div className="container-fluid pb-5">

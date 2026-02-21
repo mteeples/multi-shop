@@ -1,14 +1,9 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import ProductList from "./ProductList";
+import { ProductContext } from "../../store/product-context";
 
 export default function FeaturedProducts() {
-  const [featuredProducts, setFeaturedProducts] = useState([]);
-
-  useEffect(() => {
-    fetch("https://dummyjson.com/products?limit=8")
-      .then((res) => res.json())
-      .then((data) => setFeaturedProducts(data.products));
-  }, []);
+  const { getFeaturedProducts } = useContext(ProductContext);
 
   return (
     <div className="container-fluid pt-5 pb-3">
@@ -16,7 +11,7 @@ export default function FeaturedProducts() {
         <span className="bg-secondary pr-3">Featured Products</span>
       </h2>
       <ProductList
-        products={featuredProducts}
+        products={getFeaturedProducts(8)}
         productClass="col-lg-3 col-md-4 col-sm-6 pb-1"
         className="row px-xl-5"
       />
