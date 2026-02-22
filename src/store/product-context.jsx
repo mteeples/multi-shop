@@ -18,10 +18,12 @@ export function ProductContextProvider({ children }) {
   const sessionProducts = JSON.parse(sessionStorage.getItem("products"));
 
   // Set state
-  const [products, setProducts] = useState(sessionProducts);
+  const [products, setProducts] = useState(
+    sessionProducts === null ? [] : sessionProducts,
+  );
 
   useEffect(() => {
-    if (products !== null) {
+    if (sessionProducts !== null) {
       return;
     }
 
