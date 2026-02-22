@@ -14,3 +14,4 @@
 ## Where it is used
 
 - ProductDetail and ProductTile components
+- I didn't realize at first that the reviews themselves implement the card as i elements instead of small, so I would have to rework the component a bit to get it to work across the whole project.
