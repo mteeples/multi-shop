@@ -22,7 +22,6 @@ export function ProductContextProvider({ children }) {
 
   useEffect(() => {
     if (products !== null) {
-      console.log("Backend data already loaded.");
       return;
     }
 
@@ -40,8 +39,6 @@ export function ProductContextProvider({ children }) {
       sessionStorage.setItem("products", JSON.stringify(fetchedProducts));
     }
     fetchBackendData();
-
-    console.log("Loaded backend data.");
   }, [products]);
 
   function getCategories() {
