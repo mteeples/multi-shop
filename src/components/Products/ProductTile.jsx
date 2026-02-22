@@ -1,4 +1,6 @@
 import { formatPrice } from "../../utils/formatPrice";
+import StarRating from "../Reviews/StarRating";
+import { calculateAvgRating } from "../../utils/calculateAvgRating";
 
 function getFullPrice(price, discountPercentage) {
   const fullPrice = price / (1 - discountPercentage / 100);
@@ -11,6 +13,7 @@ export default function ProductTile({ product, ...props }) {
     price,
     discountPercentage,
     thumbnail,
+    reviews,
     id: productId,
   } = product;
   return (
@@ -47,12 +50,11 @@ export default function ProductTile({ product, ...props }) {
             </h6>
           </div>
           <div className="d-flex align-items-center justify-content-center mb-1">
-            <small className="fa fa-star text-primary mr-1"></small>
-            <small className="fa fa-star text-primary mr-1"></small>
-            <small className="fa fa-star text-primary mr-1"></small>
-            <small className="fa fa-star text-primary mr-1"></small>
-            <small className="fa fa-star text-primary mr-1"></small>
-            <small>(99)</small>
+            <StarRating
+              rating={calculateAvgRating(reviews)}
+              baseClass="text-primary mr-1"
+            />
+            <small>({reviews.length})</small>
           </div>
         </div>
       </div>

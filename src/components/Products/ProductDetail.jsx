@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { formatPrice } from "../../utils/formatPrice";
 import { ProductContext } from "../../store/product-context";
+import StarRating from "../Reviews/StarRating";
+import { calculateAvgRating } from "../../utils/calculateAvgRating";
 
 export default function ProductDetail({ productId }) {
   const { getProduct } = useContext(ProductContext);
-  console.log(getProduct(productId));
-  const { title, description, price, images } = getProduct(productId);
+  const { title, description, price, images, reviews } = getProduct(productId);
 
   return (
     <div className="container-fluid pb-5">
@@ -52,13 +53,9 @@ export default function ProductDetail({ productId }) {
             <h3>{title ? title : "..."}</h3>
             <div className="d-flex mb-3">
               <div className="text-primary mr-2">
-                <small className="fas fa-star"></small>
-                <small className="fas fa-star"></small>
-                <small className="fas fa-star"></small>
-                <small className="fas fa-star-half-alt"></small>
-                <small className="far fa-star"></small>
+                <StarRating rating={calculateAvgRating(reviews)} />
               </div>
-              <small className="pt-1">(99 Reviews)</small>
+              <small className="pt-1">({reviews.length} Reviews)</small>
             </div>
             <h3 className="font-weight-semi-bold mb-4">
               {price ? formatPrice(price) : "..."}
@@ -254,7 +251,7 @@ export default function ProductDetail({ productId }) {
                 data-toggle="tab"
                 href="#tab-pane-3"
               >
-                Reviews (0)
+                Reviews ({reviews.length})
               </a>
             </div>
             <div className="tab-content">
