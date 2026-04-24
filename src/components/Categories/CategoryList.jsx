@@ -17,7 +17,7 @@ export default function CategoryList() {
             <div key={category} className="col-lg-3 col-md-4 col-sm-6 pb-1">
               <Link
                 className="text-decoration-none"
-                to={`products/category/${category}`}
+                to={`/products/category/${category}`}
               >
                 <div className="cat-item d-flex align-items-center mb-4">
                   <div
