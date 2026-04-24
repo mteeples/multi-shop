@@ -34,26 +34,9 @@ export default function NavBar() {
                 <a href="/categories" className="nav-item nav-link">
                   Shop
                 </a>
-                <a href="detail.html" className="nav-item nav-link">
-                  Shop Detail
+                <a href="cart.html" className="nav-item nav-link">
+                  Shopping Cart
                 </a>
-                <div className="nav-item dropdown">
-                  <a
-                    href="/"
-                    className="nav-link dropdown-toggle"
-                    data-toggle="dropdown"
-                  >
-                    Pages <i className="fa fa-angle-down mt-1"></i>
-                  </a>
-                  <div className="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                    <a href="cart.html" className="dropdown-item">
-                      Shopping Cart
-                    </a>
-                    <a href="checkout.html" className="dropdown-item">
-                      Checkout
-                    </a>
-                  </div>
-                </div>
                 <a href="contact.html" className="nav-item nav-link">
                   Contact
                 </a>
