@@ -116,8 +116,8 @@ async function action({ params, request }) {
   try {
     const response = await myAxios.post("contacts.json", body);
     return response.data;
-  } catch (error) {
-    return { error: "Could not submit message. Please try again later" };
+  } catch (err) {
+    return { error: err.toString() };
   }
 }
 
