@@ -7,7 +7,7 @@ import Footer from "./Footer";
 export default function Layout({ children }) {
   const navigation = useNavigation();
   const operationPending =
-    navigation.state === "idle" || navigation.state === "submitting";
+    navigation.state === "loading" || navigation.state === "submitting";
   return (
     <>
       {operationPending ? (
