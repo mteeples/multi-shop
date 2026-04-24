@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link } from "react-router";
 import { formatCategory } from "../../utils/formatCategory";
 import { ProductContext } from "../../store/product-context";
 
@@ -14,9 +15,9 @@ export default function CategoryList() {
         {getCategories().map(({ category, numProducts, thumbnail, title }) => {
           return (
             <div key={category} className="col-lg-3 col-md-4 col-sm-6 pb-1">
-              <a
+              <Link
                 className="text-decoration-none"
-                href={`products/category/${category}`}
+                to={`products/category/${category}`}
               >
                 <div className="cat-item d-flex align-items-center mb-4">
                   <div
@@ -30,7 +31,7 @@ export default function CategoryList() {
                     <small className="text-body">{numProducts} Products</small>
                   </div>
                 </div>
-              </a>
+              </Link>
             </div>
           );
         })}

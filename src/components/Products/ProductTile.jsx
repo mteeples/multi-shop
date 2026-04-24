@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { formatPrice } from "../../utils/formatPrice";
 import StarRating from "../Reviews/StarRating";
 import { calculateAvgRating } from "../../utils/calculateAvgRating";
@@ -37,12 +38,12 @@ export default function ProductTile({ product, ...props }) {
           </div>
         </div>
         <div className="text-center py-4">
-          <a
+          <Link
             className="h6 text-decoration-none text-truncate"
-            href={`/products/${productId}`}
+            to={`/products/${productId}`}
           >
             {title}
-          </a>
+          </Link>
           <div className="d-flex align-items-center justify-content-center mt-2">
             <h5>{formatPrice(price)}</h5>
             <h6 className="text-muted ml-2">

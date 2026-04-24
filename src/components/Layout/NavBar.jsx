@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { NavLink, Link } from "react-router";
 import CategoryMenu from "../Categories/CategoryMenu";
 
 export default function NavBar() {
@@ -8,14 +8,14 @@ export default function NavBar() {
         <CategoryMenu />
         <div className="col-lg-9">
           <nav className="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
-            <a href="/" className="text-decoration-none d-block d-lg-none">
+            <Link to="/" className="text-decoration-none d-block d-lg-none">
               <span className="h1 text-uppercase text-dark bg-light px-2">
                 Multi
               </span>
               <span className="h1 text-uppercase text-light bg-primary px-2 ml-n1">
                 Shop
               </span>
-            </a>
+            </Link>
             <button
               type="button"
               className="navbar-toggler"
@@ -43,7 +43,7 @@ export default function NavBar() {
                 </NavLink>
               </div>
               <div className="navbar-nav ml-auto py-0 d-none d-lg-block">
-                <a href="/" className="btn px-0">
+                <Link to="/" className="btn px-0">
                   <i className="fas fa-heart text-primary"></i>
                   <span
                     className="badge text-secondary border border-secondary rounded-circle"
@@ -51,8 +51,8 @@ export default function NavBar() {
                   >
                     0
                   </span>
-                </a>
-                <a href="/" className="btn px-0 ml-3">
+                </Link>
+                <Link to="/" className="btn px-0 ml-3">
                   <i className="fas fa-shopping-cart text-primary"></i>
                   <span
                     className="badge text-secondary border border-secondary rounded-circle"
@@ -60,7 +60,7 @@ export default function NavBar() {
                   >
                     0
                   </span>
-                </a>
+                </Link>
               </div>
             </div>
           </nav>

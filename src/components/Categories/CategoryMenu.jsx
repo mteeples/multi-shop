@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link } from "react-router";
 import { formatCategory } from "../../utils/formatCategory";
 import { ProductContext } from "../../store/product-context";
 
@@ -26,13 +27,13 @@ export default function CategoryMenu() {
         <div className="navbar-nav w-100">
           {getCategories().map(({ category }) => {
             return (
-              <a
+              <Link
                 key={category}
-                href={`/products/category/${category}`}
+                to={`/products/category/${category}`}
                 className="nav-item nav-link"
               >
                 {formatCategory(category)}
-              </a>
+              </Link>
             );
           })}
         </div>
