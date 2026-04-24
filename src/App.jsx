@@ -6,6 +6,7 @@ import CategoriesPage from "./pages/CategoriesPage";
 import ProductsByCategoryPage from "./pages/ProductsByCategoryPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import ContactPage from "./pages/ContactPage";
+import { action as contactAction } from "./components/Contact/ContactForm";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
     errorElement: <p>Page not found</p>,
     children: [
       { index: true, Component: HomePage },
-      { path: "contact", Component: ContactPage },
+      { path: "contact", Component: ContactPage, action: contactAction },
       { path: "categories", Component: CategoriesPage },
       {
         path: "products",
