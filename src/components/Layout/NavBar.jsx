@@ -38,7 +38,7 @@ export default function NavBar() {
                 <NavLink to="/" className="nav-item nav-link">
                   Shopping Cart
                 </NavLink>
-                <NavLink to="/" className="nav-item nav-link">
+                <NavLink to="/contact" className="nav-item nav-link">
                   Contact
                 </NavLink>
               </div>
