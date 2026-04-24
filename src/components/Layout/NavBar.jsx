@@ -1,3 +1,4 @@
+import { NavLink } from "react-router";
 import CategoryMenu from "../Categories/CategoryMenu";
 
 export default function NavBar() {
@@ -28,18 +29,18 @@ export default function NavBar() {
               id="navbarCollapse"
             >
               <div className="navbar-nav mr-auto py-0">
-                <a href="/" className="nav-item nav-link active">
+                <NavLink to="/" className="nav-item nav-link">
                   Home
-                </a>
-                <a href="/categories" className="nav-item nav-link">
+                </NavLink>
+                <NavLink to="/categories" className="nav-item nav-link">
                   Shop
-                </a>
-                <a href="cart.html" className="nav-item nav-link">
+                </NavLink>
+                <NavLink to="/" className="nav-item nav-link">
                   Shopping Cart
-                </a>
-                <a href="contact.html" className="nav-item nav-link">
+                </NavLink>
+                <NavLink to="/" className="nav-item nav-link">
                   Contact
-                </a>
+                </NavLink>
               </div>
               <div className="navbar-nav ml-auto py-0 d-none d-lg-block">
                 <a href="/" className="btn px-0">
