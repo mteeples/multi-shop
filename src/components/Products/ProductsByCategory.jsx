@@ -1,11 +1,7 @@
-import { useContext } from "react";
 import ProductList from "./ProductList";
 import { formatCategory } from "../../utils/formatCategory";
-import { ProductContext } from "../../store/product-context";
 
-export default function ProductsByCategory({ categoryName }) {
-  const { getProductsByCategory } = useContext(ProductContext);
-
+export default function ProductsByCategory({ categoryName, products }) {
   return (
     <div className="col-lg-9 col-md-8">
       <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4">
@@ -14,7 +10,7 @@ export default function ProductsByCategory({ categoryName }) {
         </span>
       </h2>
       <ProductList
-        products={getProductsByCategory(categoryName)}
+        products={products}
         productClass="col-lg-4 col-md-6 col-sm-6 pb-1"
         className="row pb-3"
       />
