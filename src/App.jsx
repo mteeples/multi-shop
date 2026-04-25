@@ -9,6 +9,7 @@ import ContactPage from "./pages/ContactPage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import { action as contactAction } from "./components/Contact/ContactForm";
+import { signupAction } from "./utils/auth";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, Component: HomePage },
       { path: "contact", Component: ContactPage, action: contactAction },
-      { path: "signup", Component: SignUpPage },
+      { path: "signup", Component: SignUpPage, action: signupAction },
       { path: "login", Component: LoginPage },
       { path: "categories", Component: CategoriesPage },
       {

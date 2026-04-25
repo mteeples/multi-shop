@@ -1,9 +1,38 @@
-import { Form } from "react-router";
+import { Form, useActionData } from "react-router";
 
 export default function SignUpForm() {
+  const actionData = useActionData();
+
   return (
     <div className="col-lg-7 mb-5">
       <div className="contact-form bg-light p-30">
+        <div
+          id="success"
+          className={
+            actionData && actionData.error
+              ? "alert alert-danger"
+              : actionData
+                ? "alert alert-success"
+                : undefined
+          }
+        >
+          {actionData && actionData.error && (
+            <>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-hidden="true"
+              >
+                &times;
+              </button>
+              <strong>{actionData.error}</strong>
+            </>
+          )}
+          {actionData && actionData.email && (
+            <strong>New account created for {actionData.email}</strong>
+          )}
+        </div>
         <Form
           name="signUpForm"
           id="signUpForm"
