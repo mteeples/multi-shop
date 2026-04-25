@@ -1,10 +1,9 @@
-import { useContext } from "react";
+import { useProducts } from "../../hooks/useProducts";
 import { Link } from "react-router";
 import { formatCategory } from "../../utils/formatCategory";
-import { ProductContext } from "../../store/product-context";
 
 export default function CategoryList() {
-  const { getCategories } = useContext(ProductContext);
+  const { getCategories } = useProducts();
 
   return (
     <div className="container-fluid pt-5">

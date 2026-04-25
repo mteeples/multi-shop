@@ -15,6 +15,7 @@ import {
   authStatusLoader,
   logoutLoader,
 } from "./utils/auth";
+import { useProductSync } from "./hooks/useProductSync";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  useProductSync();
   return <RouterProvider router={router} />;
 }
 

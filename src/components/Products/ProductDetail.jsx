@@ -1,11 +1,10 @@
-import { useContext } from "react";
+import { useProducts } from "../../hooks/useProducts";
 import { formatPrice } from "../../utils/formatPrice";
-import { ProductContext } from "../../store/product-context";
 import StarRating from "../Reviews/StarRating";
 import { calculateAvgRating } from "../../utils/calculateAvgRating";
 
 export default function ProductDetail({ productId }) {
-  const { getProduct } = useContext(ProductContext);
+  const { getProduct } = useProducts();
   const { title, description, price, images, reviews } = getProduct(productId);
 
   return (

@@ -1,9 +1,9 @@
-import { useContext, useState } from "react";
-import { ProductContext } from "../store/product-context";
+import { useState } from "react";
+import { useProducts } from "./useProducts";
 
 export function useFilteredProducts(categoryName) {
   // Get all products to derive unique brands
-  const { getProductsByCategory } = useContext(ProductContext);
+  const { getProductsByCategory } = useProducts();
   const allProducts = getProductsByCategory(categoryName);
 
   // Derive unique brands and use it to create filter state

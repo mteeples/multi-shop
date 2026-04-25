@@ -1,9 +1,8 @@
-import { useContext } from "react";
+import { useProducts } from "../../hooks/useProducts";
 import ProductList from "./ProductList";
-import { ProductContext } from "../../store/product-context";
 
 export default function FeaturedProducts() {
-  const { getFeaturedProducts } = useContext(ProductContext);
+  const { getFeaturedProducts } = useProducts();
 
   return (
     <div className="container-fluid pt-5 pb-3">
