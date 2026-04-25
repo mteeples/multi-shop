@@ -9,6 +9,10 @@ export default function ProductsByCategoryPage() {
   const { brands, products, filterProducts } =
     useFilteredProducts(categoryName);
 
+  // Weird behavior if you navigate from one category to another category.
+  // Filters do not reset, since the component is the same. They work as normal
+  // once the user interacts with them, but they are not all selected by default.
+
   return (
     <Container className="container-fluid">
       <Container className="row px-xl-5">

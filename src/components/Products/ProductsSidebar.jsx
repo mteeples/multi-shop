@@ -11,7 +11,7 @@ export default function ProductsSidebar({ brands, filterProducts }) {
             .map(({ brand, numItems, filterActive }, index) => {
               return (
                 <div
-                  key={brand}
+                  key={brand || "null"}
                   className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
                 >
                   <input
