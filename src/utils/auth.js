@@ -140,3 +140,23 @@ export async function loginAction({ request }) {
     return { error: errorMessage };
   }
 }
+
+export function logoutLoader() {
+  // Need to come back to this!
+  // Logout does not show immediately.
+  // I think it is not updating localstorage fast enough for authStatusLoader
+  localStorage.removeItem("userData");
+  return redirect("/");
+}
+
+export function authStatusLoader() {
+  const userData = JSON.parse(localStorage.getItem("userData"));
+
+  try {
+    if (new Date().getTime() > new Date(userData.expiration).getTime()) {
+      redirect("/logout");
+    }
+  } catch {}
+
+  return userData;
+}

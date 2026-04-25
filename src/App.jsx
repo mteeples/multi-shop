@@ -9,11 +9,18 @@ import ContactPage from "./pages/ContactPage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import { action as contactAction } from "./components/Contact/ContactForm";
-import { signupAction, loginAction } from "./utils/auth";
+import {
+  signupAction,
+  loginAction,
+  authStatusLoader,
+  logoutLoader,
+} from "./utils/auth";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    id: "root",
+    loader: authStatusLoader,
     Component: RootLayout,
     errorElement: <p>Page not found</p>,
     children: [
@@ -21,6 +28,7 @@ const router = createBrowserRouter([
       { path: "contact", Component: ContactPage, action: contactAction },
       { path: "signup", Component: SignUpPage, action: signupAction },
       { path: "login", Component: LoginPage, action: loginAction },
+      { path: "logout", loader: logoutLoader },
       { path: "categories", Component: CategoriesPage },
       {
         path: "products",
