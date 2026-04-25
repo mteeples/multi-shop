@@ -145,6 +145,7 @@ export function logoutLoader() {
   // Need to come back to this!
   // Logout does not show immediately.
   // I think it is not updating localstorage fast enough for authStatusLoader
+  // Actually, it looks like it only happens when you stay on the login page and immediately try to log out
   localStorage.removeItem("userData");
   return redirect("/");
 }
