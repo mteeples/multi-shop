@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export default function TopBar() {
   return (
     <div className="container-fluid">
@@ -29,12 +31,12 @@ export default function TopBar() {
                 My Account
               </button>
               <div className="dropdown-menu dropdown-menu-right">
-                <button className="dropdown-item" type="button">
+                <Link to="/login" className="dropdown-item" type="button">
                   Sign in
-                </button>
-                <button className="dropdown-item" type="button">
+                </Link>
+                <Link to="/signup" className="dropdown-item" type="button">
                   Sign up
-                </button>
+                </Link>
               </div>
             </div>
             <div className="btn-group mx-2">
