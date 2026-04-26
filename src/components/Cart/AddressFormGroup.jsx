@@ -59,7 +59,6 @@ export default function AddressFormGroup({ fieldPrefix, children, required }) {
             type="text"
             placeholder="123 Street"
             name={`${fieldPrefix}AddressLine2`}
-            required={required}
           />
         </div>
         <div className="col-md-6 form-group">
