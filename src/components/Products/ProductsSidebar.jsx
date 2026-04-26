@@ -18,7 +18,6 @@ export default function ProductsSidebar({ brands, filterProducts }) {
                     type="checkbox"
                     className="custom-control-input"
                     id={brand}
-                    onChange={(e) => console.log(e.target.checked)}
                     onChange={filterProducts}
                     checked={filterActive}
                   />
