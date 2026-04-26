@@ -2,14 +2,11 @@ import { useProducts } from "../../hooks/useProducts";
 import { formatPrice } from "../../utils/formatPrice";
 import StarRating from "../Reviews/StarRating";
 import { calculateAvgRating } from "../../utils/calculateAvgRating";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addItem } from "../../store/cart";
 import { useQuantityInput } from "../../hooks/useQuantityInput";
 
 export default function ProductDetail({ productId }) {
-  const items = useSelector((state) => state.cart.items);
-
   const { getProduct } = useProducts();
   const { title, description, price, images, reviews, id, thumbnail } =
     getProduct(productId);

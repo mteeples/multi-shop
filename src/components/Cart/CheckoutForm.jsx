@@ -158,7 +158,6 @@ const action = async ({ params, request }) => {
     // Items
     const cartItems = JSON.parse(sessionStorage.getItem("cartItems"));
     // Duplicate logic from my hook
-    const numItems = cartItems.length;
     const subtotal = cartItems.reduce(
       (total, current) => total + current.price * current.quantity,
       0,

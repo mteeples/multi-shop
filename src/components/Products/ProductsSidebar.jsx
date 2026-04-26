@@ -8,7 +8,7 @@ export default function ProductsSidebar({ brands, filterProducts }) {
         <form>
           {brands
             .sort((a, b) => a.brand > b.brand)
-            .map(({ brand, numItems, filterActive }, index) => {
+            .map(({ brand, numItems, filterActive }) => {
               return (
                 <div
                   key={brand || "null"}

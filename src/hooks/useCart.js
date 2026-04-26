@@ -1,9 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 export function useCart() {
-  // Create dispatch to interact with store
-  const dispatch = useDispatch();
-
   // Pull from redux store and calculate derived values
   const items = useSelector((state) => state.cart.items);
 

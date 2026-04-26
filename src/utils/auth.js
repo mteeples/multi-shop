@@ -165,7 +165,9 @@ export function authStatusLoader() {
     if (new Date().getTime() > new Date(userData.expiration).getTime()) {
       redirect("/logout");
     }
-  } catch {}
+  } catch {
+    console.log("No expiration found");
+  }
 
   return userData;
 }

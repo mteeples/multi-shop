@@ -33,5 +33,5 @@ export function useProductSync() {
       sessionStorage.setItem("products", JSON.stringify(fetchedProducts));
     }
     fetchBackendData();
-  }, [dispatch]);
+  }, [dispatch, sessionProducts]);
 }

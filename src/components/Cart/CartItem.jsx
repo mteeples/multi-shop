@@ -1,4 +1,3 @@
-import { useQuantityInput } from "../../hooks/useQuantityInput";
 import { useDispatch } from "react-redux";
 import { formatPrice } from "../../utils/formatPrice";
 import { updateItemQuantity, removeItem } from "../../store/cart";
