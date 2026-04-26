@@ -16,6 +16,7 @@ import {
   logoutLoader,
 } from "./utils/auth";
 import { useProductSync } from "./hooks/useProductSync";
+import { useCartSync } from "./hooks/useCartSync";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,7 @@ const router = createBrowserRouter([
 
 function App() {
   useProductSync();
+  useCartSync();
   return <RouterProvider router={router} />;
 }
 
