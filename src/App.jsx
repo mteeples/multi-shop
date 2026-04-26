@@ -2,28 +2,21 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 
 import RootLayout from "./components/Layout/RootLayout";
 import HomePage from "./pages/HomePage";
-import CategoriesPage from "./pages/CategoriesPage";
-import ProductsByCategoryPage from "./pages/ProductsByCategoryPage";
-import ProductDetailPage from "./pages/ProductDetailPage";
-import ContactPage from "./pages/ContactPage";
-import SignUpPage from "./pages/SignUpPage";
-import LoginPage from "./pages/LoginPage";
-import CartPage from "./pages/CartPage";
-import { action as contactAction } from "./components/Contact/ContactForm";
 import {
-  signupAction,
-  loginAction,
   authStatusLoader,
   logoutLoader,
+  loginAction,
+  signupAction,
 } from "./utils/auth";
 import { useProductSync } from "./hooks/useProductSync";
 import { useCartSync } from "./hooks/useCartSync";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login, logout } from "./store/auth";
 import { useAuthSync } from "./hooks/useAuthSync";
-import CheckoutPage from "./pages/CheckoutPage";
-import { action as checkoutAction } from "./components/Cart/CheckoutForm";
-import { resetCart } from "./store/cart";
+
+// These pages have weird actions that I couldn't figure out with lazy loading
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,7 +32,20 @@ function App() {
       errorElement: <p>Page not found</p>,
       children: [
         { index: true, Component: HomePage },
-        { path: "contact", Component: ContactPage, action: contactAction },
+        {
+          path: "contact",
+          lazy: async () => {
+            const actionModule =
+              await import("./components/Contact/ContactForm");
+            const pageModule = await import("./pages/ContactPage");
+            return {
+              Component: pageModule.default,
+              action: actionModule.action,
+            };
+          },
+        },
+
+        // Because of their tricky actions/loader, I did not lazy load the auth endpoints
         {
           path: "signup",
           Component: SignUpPage,
@@ -50,22 +56,52 @@ function App() {
           Component: LoginPage,
           action: loginAction((data) => dispatch(login(data))),
         },
-        { path: "logout", loader: logoutLoader(() => dispatch(logout())) },
-        { path: "categories", Component: CategoriesPage },
-        { path: "cart", Component: CartPage },
+        {
+          path: "logout",
+          loader: logoutLoader(() => dispatch(logout())),
+        },
+        {
+          path: "categories",
+          lazy: async () => {
+            const module = await import("./pages/CategoriesPage");
+            return { Component: module.default };
+          },
+        },
+        {
+          path: "cart",
+          lazy: async () => {
+            const module = await import("./pages/CartPage");
+            return { Component: module.default };
+          },
+        },
         {
           path: "checkout",
-          Component: CheckoutPage,
-          action: checkoutAction,
+          lazy: async () => {
+            const pageModule = await import("./pages/CheckoutPage");
+            const actionModule = await import("./components/Cart/CheckoutForm");
+            return {
+              Component: pageModule.default,
+              action: actionModule.action,
+            };
+          },
         },
         {
           path: "products",
           children: [
             {
               path: "category/:categoryName",
-              Component: ProductsByCategoryPage,
+              lazy: async () => {
+                const module = await import("./pages/ProductsByCategoryPage");
+                return { Component: module.default };
+              },
             },
-            { path: ":productId", Component: ProductDetailPage },
+            {
+              path: ":productId",
+              lazy: async () => {
+                const module = await import("./pages/ProductDetailPage");
+                return { Component: module.default };
+              },
+            },
           ],
         },
       ],
