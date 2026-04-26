@@ -18,36 +18,55 @@ import {
 } from "./utils/auth";
 import { useProductSync } from "./hooks/useProductSync";
 import { useCartSync } from "./hooks/useCartSync";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    id: "root",
-    loader: authStatusLoader,
-    Component: RootLayout,
-    errorElement: <p>Page not found</p>,
-    children: [
-      { index: true, Component: HomePage },
-      { path: "contact", Component: ContactPage, action: contactAction },
-      { path: "signup", Component: SignUpPage, action: signupAction },
-      { path: "login", Component: LoginPage, action: loginAction },
-      { path: "logout", loader: logoutLoader },
-      { path: "categories", Component: CategoriesPage },
-      { path: "cart", Component: CartPage },
-      {
-        path: "products",
-        children: [
-          { path: "category/:categoryName", Component: ProductsByCategoryPage },
-          { path: ":productId", Component: ProductDetailPage },
-        ],
-      },
-    ],
-  },
-]);
+import { useSelector, useDispatch } from "react-redux";
+import { login, logout } from "./store/auth";
+import { useAuthSync } from "./hooks/useAuthSync";
 
 function App() {
+  const dispatch = useDispatch();
+
+  // Move inside the app to  give loaders/actions access to global state
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      id: "root",
+      loader: authStatusLoader,
+      Component: RootLayout,
+      hydrateFallbackElement: <p>Loading...</p>,
+      errorElement: <p>Page not found</p>,
+      children: [
+        { index: true, Component: HomePage },
+        { path: "contact", Component: ContactPage, action: contactAction },
+        {
+          path: "signup",
+          Component: SignUpPage,
+          action: signupAction((data) => dispatch(login(data))),
+        },
+        {
+          path: "login",
+          Component: LoginPage,
+          action: loginAction((data) => dispatch(login(data))),
+        },
+        { path: "logout", loader: logoutLoader(() => dispatch(logout())) },
+        { path: "categories", Component: CategoriesPage },
+        { path: "cart", Component: CartPage },
+        {
+          path: "products",
+          children: [
+            {
+              path: "category/:categoryName",
+              Component: ProductsByCategoryPage,
+            },
+            { path: ":productId", Component: ProductDetailPage },
+          ],
+        },
+      ],
+    },
+  ]);
+
   useProductSync();
   useCartSync();
+  useAuthSync();
   return <RouterProvider router={router} />;
 }
 

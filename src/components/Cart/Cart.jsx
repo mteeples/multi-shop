@@ -2,10 +2,10 @@ import CartItem from "./CartItem";
 import { useSelector } from "react-redux";
 import { useCart } from "../../hooks/useCart";
 import { formatPrice } from "../../utils/formatPrice";
-import { useRouteLoaderData, Link } from "react-router";
+import { Link } from "react-router";
 
 export default function Cart() {
-  const userData = useRouteLoaderData("root");
+  const userData = useSelector((state) => state.auth.userData);
   const { subtotal, shipping, total, numItems } = useCart();
 
   const cartItems = useSelector((state) => state.cart.items);

@@ -14,141 +14,149 @@ async function sendAuthRequest(email, password, endpoint) {
   return response;
 }
 
-export async function signupAction({ request }) {
-  // Catch and return errors
-  try {
-    // Get form data
-    const formData = await request.formData();
-    const email = formData.get("email");
-    const password = formData.get("password");
-    const firstName = formData.get("firstName");
-    const lastName = formData.get("lastName");
+const signupAction =
+  (updateState) =>
+  async ({ request }) => {
+    // Catch and return errors
+    try {
+      // Get form data
+      const formData = await request.formData();
+      const email = formData.get("email");
+      const password = formData.get("password");
+      const firstName = formData.get("firstName");
+      const lastName = formData.get("lastName");
 
-    // Send signup request
-    const response = await sendAuthRequest(email, password, "signUp");
+      // Send signup request
+      const response = await sendAuthRequest(email, password, "signUp");
 
-    // Calculate expiration date/time
-    const expiration = new Date(
-      new Date().getTime() + response.data.expiresIn * 1000,
-    );
+      // Calculate expiration date/time (store as ms)
+      const expiration = new Date().getTime() + response.data.expiresIn * 1000;
 
-    // Create userData
-    const localId = response.data.localId;
-    const token = response.data.idToken;
-    const userData = {
-      firstName,
-      lastName,
-      email,
-      localId,
-      token,
-      expiration,
-    };
+      // Create userData
+      const localId = response.data.localId;
+      const token = response.data.idToken;
+      const userData = {
+        firstName,
+        lastName,
+        email,
+        localId,
+        token,
+        expiration,
+      };
 
-    // Convert userData to json and store in localStorage
-    localStorage.setItem("userData", JSON.stringify(userData));
+      // Convert userData to json and store in localStorage
+      localStorage.setItem("userData", JSON.stringify(userData));
+      updateState(userData);
 
-    // Use Axios to PUT new user to firebase db
-    const newUser = {
-      firstName,
-      lastName,
-      email,
-      userId: localId,
-    };
-    const axiosResponse = await myAxios.put(`/users/${localId}.json`, newUser);
+      // Use Axios to PUT new user to firebase db
+      const newUser = {
+        firstName,
+        lastName,
+        email,
+        userId: localId,
+      };
+      const axiosResponse = await myAxios.put(
+        `/users/${localId}.json`,
+        newUser,
+      );
 
-    // Redirect
-    redirect(request.url);
+      // Redirect
+      redirect(request.url);
 
-    // Return response for sign up form to use
-    return axiosResponse.data;
-  } catch (err) {
-    let errorMessage = err.toString();
+      // Return response for sign up form to use
+      return axiosResponse.data;
+    } catch (err) {
+      let errorMessage = err.toString();
 
-    // Extract message, making sure the fields exist in the packet
-    const errorDetail =
-      (err &&
-        err.response &&
-        err.response.data &&
-        err.response.data.error &&
-        err.response.data.error.message) ||
-      null;
-    if (errorDetail) {
-      errorMessage += ` ${errorDetail}`;
+      // Extract message, making sure the fields exist in the packet
+      const errorDetail =
+        (err &&
+          err.response &&
+          err.response.data &&
+          err.response.data.error &&
+          err.response.data.error.message) ||
+        null;
+      if (errorDetail) {
+        errorMessage += ` ${errorDetail}`;
+      }
+      return { error: errorMessage };
     }
-    return { error: errorMessage };
-  }
-}
+  };
 
-export async function loginAction({ request }) {
-  // Catch and return errors
-  try {
-    // Get form data
-    const formData = await request.formData();
-    const email = formData.get("email");
-    const password = formData.get("password");
+const loginAction =
+  (updateState) =>
+  async ({ request }) => {
+    // Catch and return errors
+    try {
+      // Get form data
+      const formData = await request.formData();
+      const email = formData.get("email");
+      const password = formData.get("password");
 
-    // Send login request
-    const response = await sendAuthRequest(
-      email,
-      password,
-      "signInWithPassword",
-    );
-    const localId = response.data.localId;
-    const token = response.data.idToken;
+      // Send login request
+      const response = await sendAuthRequest(
+        email,
+        password,
+        "signInWithPassword",
+      );
+      const localId = response.data.localId;
+      const token = response.data.idToken;
 
-    // Calculate expiration date/time
-    const expiration = new Date(
-      new Date().getTime() + response.data.expiresIn * 1000,
-    );
+      // Calculate expiration date/time (store as ms)
+      const expiration = new Date().getTime() + response.data.expiresIn * 1000;
 
-    // Retrieve user data from firebase
-    const axiosResponse = await myAxios.get(`/users/${localId}.json`);
-    const { firstName, lastName } = axiosResponse.data;
+      // Retrieve user data from firebase
+      const axiosResponse = await myAxios.get(`/users/${localId}.json`);
+      const { firstName, lastName } = axiosResponse.data;
 
-    // Build userData object
-    const userData = {
-      firstName,
-      lastName,
-      email,
-      localId,
-      token,
-      expiration,
-    };
+      // Build userData object
+      const userData = {
+        firstName,
+        lastName,
+        email,
+        localId,
+        token,
+        expiration,
+      };
 
-    // Convert userData to json and store in localStorage
-    localStorage.setItem("userData", JSON.stringify(userData));
+      // Convert userData to json and store in localStorage
+      localStorage.setItem("userData", JSON.stringify(userData));
+      updateState(userData);
 
-    // Redirect
-    redirect(request.url);
+      // Redirect
+      redirect(request.url);
 
-    // Return response for sign up form to use
-    return userData;
-  } catch (err) {
-    let errorMessage = err.toString();
+      // Return response for sign up form to use
+      return userData;
+    } catch (err) {
+      let errorMessage = err.toString();
 
-    // Extract message, making sure the fields exist in the packet
-    const errorDetail =
-      (err &&
-        err.response &&
-        err.response.data &&
-        err.response.data.error &&
-        err.response.data.error.message) ||
-      null;
-    if (errorDetail) {
-      errorMessage += ` ${errorDetail}`;
+      // Extract message, making sure the fields exist in the packet
+      const errorDetail =
+        (err &&
+          err.response &&
+          err.response.data &&
+          err.response.data.error &&
+          err.response.data.error.message) ||
+        null;
+      if (errorDetail) {
+        errorMessage += ` ${errorDetail}`;
+      }
+      return { error: errorMessage };
     }
-    return { error: errorMessage };
-  }
-}
+  };
 
-export function logoutLoader() {
+const logoutLoader = (updateState) => () => {
   // Need to come back to this!
   // Logout does not show immediately.
   // I think it is not updating localstorage fast enough for authStatusLoader
   // Actually, it looks like it only happens when you stay on the login page and immediately try to log out
+
+  // Edit, passing in the state updater totally fixed this
   localStorage.removeItem("userData");
+  updateState();
   return redirect("/");
-}
+};
 
 export function authStatusLoader() {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -161,3 +169,5 @@ export function authStatusLoader() {
 
   return userData;
 }
+
+export { logoutLoader, signupAction, loginAction };

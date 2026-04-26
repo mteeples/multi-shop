@@ -1,7 +1,8 @@
-import { Link, useRouteLoaderData } from "react-router";
+import { Link } from "react-router";
+import { useSelector } from "react-redux";
 
 export default function TopBar() {
-  const userData = useRouteLoaderData("root");
+  const userData = useSelector((state) => state.auth.userData);
 
   return (
     <div className="container-fluid">
