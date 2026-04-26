@@ -19,14 +19,18 @@ const cartSlice = createSlice({
       const newItem = existingItem
         ? { ...existingItem, quantity: existingItem.quantity + item.quantity }
         : item;
-      const cartItems = [...otherItems, { ...newItem }];
+      const cartItems = [...otherItems, { ...newItem }].sort(
+        (a, b) => a.title > b.title,
+      );
       state.items = cartItems;
       sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
     },
 
     removeItem: (state, action) => {
       const { itemId } = action.payload;
-      const cartItems = state.items.filter(({ id }) => id !== itemId);
+      const cartItems = state.items
+        .filter(({ id }) => id !== itemId)
+        .sort((a, b) => a.title > b.title);
       state.items = cartItems;
       sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
     },
@@ -38,7 +42,7 @@ const cartSlice = createSlice({
       const cartItems = [
         ...otherItems,
         { ...existingItem, quantity: newQuantity },
-      ];
+      ].sort((a, b) => a.title > b.title);
       state.items = cartItems;
       sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
     },
@@ -50,7 +54,7 @@ const cartSlice = createSlice({
 
     loadSessionCart: (state, action) => {
       const { items } = action.payload;
-      state.items = items;
+      state.items = items.sort((a, b) => a.title > b.title);
     },
   },
 });

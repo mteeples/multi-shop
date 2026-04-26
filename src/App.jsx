@@ -8,6 +8,7 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import ContactPage from "./pages/ContactPage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
+import CartPage from "./pages/CartPage";
 import { action as contactAction } from "./components/Contact/ContactForm";
 import {
   signupAction,
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
       { path: "login", Component: LoginPage, action: loginAction },
       { path: "logout", loader: logoutLoader },
       { path: "categories", Component: CategoriesPage },
+      { path: "cart", Component: CartPage },
       {
         path: "products",
         children: [

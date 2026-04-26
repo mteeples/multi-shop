@@ -38,7 +38,7 @@ export default function NavBar() {
                 <NavLink to="/categories" className="nav-item nav-link">
                   Shop
                 </NavLink>
-                <NavLink to="/" className="nav-item nav-link">
+                <NavLink to="/cart" className="nav-item nav-link">
                   Shopping Cart
                 </NavLink>
                 <NavLink to="/contact" className="nav-item nav-link">

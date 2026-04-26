@@ -5,6 +5,7 @@ import { calculateAvgRating } from "../../utils/calculateAvgRating";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../store/cart";
+import { useQuantityInput } from "../../hooks/useQuantityInput";
 
 export default function ProductDetail({ productId }) {
   const items = useSelector((state) => state.cart.items);
@@ -13,15 +14,7 @@ export default function ProductDetail({ productId }) {
   const { title, description, price, images, reviews, id, thumbnail } =
     getProduct(productId);
 
-  const [quantity, setQuantity] = useState(1);
-
-  function incrementQty() {
-    setQuantity((qty) => qty + 1);
-  }
-
-  function decrementQty() {
-    setQuantity((qty) => (qty === 1 ? 1 : qty - 1));
-  }
+  const { quantity, incrementQty, decrementQty } = useQuantityInput(1);
 
   const dispatch = useDispatch();
   function addItemToCart() {
