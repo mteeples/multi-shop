@@ -22,6 +22,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "./store/auth";
 import { useAuthSync } from "./hooks/useAuthSync";
 import CheckoutPage from "./pages/CheckoutPage";
+import { action as checkoutAction } from "./components/Cart/CheckoutForm";
+import { resetCart } from "./store/cart";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,7 +53,11 @@ function App() {
         { path: "logout", loader: logoutLoader(() => dispatch(logout())) },
         { path: "categories", Component: CategoriesPage },
         { path: "cart", Component: CartPage },
-        { path: "checkout", Component: CheckoutPage },
+        {
+          path: "checkout",
+          Component: CheckoutPage,
+          action: checkoutAction,
+        },
         {
           path: "products",
           children: [

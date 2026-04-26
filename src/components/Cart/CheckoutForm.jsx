@@ -1,8 +1,11 @@
-import { Form } from "react-router";
+import { Form, useActionData } from "react-router";
 import AddressFormGroup from "./AddressFormGroup";
 import CheckoutOrderSummary from "./CheckoutOrderSummary";
+import myAxios from "../../utils/db";
 
 export default function CheckoutForm() {
+  const actionData = useActionData();
+
   // Note: I removed the create an account checkbox, since the user should be logged in already to checkout
   return (
     <Form method="post">
@@ -42,7 +45,7 @@ export default function CheckoutForm() {
             <h5 className="section-title position-relative text-uppercase mb-3">
               <span className="bg-secondary pr-3">Order Total</span>
             </h5>
-            <CheckoutOrderSummary />
+            <CheckoutOrderSummary actionData={actionData} />
             <div className="mb-5">
               <h5 className="section-title position-relative text-uppercase mb-3">
                 <span className="bg-secondary pr-3">Payment</span>
@@ -104,3 +107,75 @@ export default function CheckoutForm() {
     </Form>
   );
 }
+
+const action = async ({ params, request }) => {
+  // I couldn't get another way to work, so I am just going to pull the extra data from local/session storage
+  const formData = await request.formData();
+
+  // billingInfo
+  const billingInfo = {
+    firstName: formData.get("billingFirstName"),
+    lastName: formData.get("billingLastName"),
+    email: formData.get("billingEmail"),
+    phoneNumber: formData.get("billingPhoneNumber"),
+    addressLine1: formData.get("billingAddressLine1"),
+    addressLine2: formData.get("billingAddressLine2"),
+    country: formData.get("billingCountry"),
+    city: formData.get("billingCity"),
+    state: formData.get("billingState"),
+    zipCode: formData.get("billingZipCode"),
+  };
+  // shippingInfo
+  const shippingInfo =
+    formData.get("shippingFirstName") === ""
+      ? { ...billingInfo }
+      : {
+          firstName: formData.get("shippingFirstName"),
+          lastName: formData.get("shippingLastName"),
+          email: formData.get("shippingEmail"),
+          phoneNumber: formData.get("shippingPhoneNumber"),
+          addressLine1: formData.get("shippingAddressLine1"),
+          addressLine2: formData.get("shippingAddressLine2"),
+          country: formData.get("shippingCountry"),
+          city: formData.get("shippingCity"),
+          state: formData.get("shippingState"),
+          zipCode: formData.get("shippingZipCode"),
+        };
+
+  try {
+    // userId
+    const { localId } = JSON.parse(localStorage.getItem("userData"));
+
+    // Items
+    const cartItems = JSON.parse(sessionStorage.getItem("cartItems"));
+    // Duplicate logic from my hook
+    const numItems = cartItems.length;
+    const subtotal = cartItems.reduce(
+      (total, current) => total + current.price * current.quantity,
+      0,
+    );
+    const shipping = subtotal * 0.1;
+    const total = subtotal + shipping;
+
+    // Build full data packet
+    const data = {
+      userId: localId,
+      billingInfo,
+      shippingInfo,
+      items: cartItems,
+      subtotal,
+      shipping,
+      total,
+      orderDate: new Date(),
+      orderStatus: "pending",
+    };
+
+    // Post to endpoint and return response data
+    const response = await myAxios.post("/orders.json", data);
+    return response.data;
+  } catch (err) {
+    return { error: err.toString() };
+  }
+};
+
+export { action };

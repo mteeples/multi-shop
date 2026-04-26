@@ -1,8 +1,12 @@
+import { Link } from "react-router";
 import { useCart } from "../../hooks/useCart";
+import { resetCart } from "../../store/cart";
 import { formatPrice } from "../../utils/formatPrice";
+import { useDispatch } from "react-redux";
 
-export default function CheckoutOrderSummary() {
+export default function CheckoutOrderSummary({ actionData }) {
   const { items, subtotal, shipping, total } = useCart();
+  const dispatch = useDispatch();
 
   return (
     <div className="bg-light p-30 mb-5">
@@ -30,6 +34,47 @@ export default function CheckoutOrderSummary() {
           <h5>Total</h5>
           <h5>{formatPrice(total)}</h5>
         </div>
+      </div>
+      <div
+        id="success"
+        className={
+          actionData && actionData.error
+            ? "alert alert-danger"
+            : actionData
+              ? "alert alert-success"
+              : undefined
+        }
+      >
+        {actionData && actionData.error && (
+          <>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-hidden="true"
+            >
+              &times;
+            </button>
+            <strong>{actionData.error}</strong>
+          </>
+        )}
+        {actionData && actionData.name && (
+          <>
+            <Link
+              to="/"
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-hidden="true"
+              onClick={() => dispatch(resetCart())}
+            >
+              &times;
+            </Link>
+            <strong>
+              Order posted to database! Close to return to home page.
+            </strong>
+          </>
+        )}
       </div>
     </div>
   );
