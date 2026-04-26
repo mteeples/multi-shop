@@ -8,6 +8,6 @@ export function useCartSync() {
   // Load from session storage
   const sessionCart = JSON.parse(sessionStorage.getItem("cartItems"));
   if (sessionCart) {
-    dispatch(loadSessionCart({ sessionCart }));
+    dispatch(loadSessionCart({ items: sessionCart }));
   }
 }
