@@ -74,9 +74,12 @@ export default function Cart() {
                   <h5>{formatPrice(total)}</h5>
                 </div>
                 {userData ? (
-                  <button className="btn btn-block btn-primary font-weight-bold my-3 py-3">
+                  <Link
+                    to="/checkout"
+                    className="btn btn-block btn-primary font-weight-bold my-3 py-3"
+                  >
                     Proceed To Checkout
-                  </button>
+                  </Link>
                 ) : (
                   <p>
                     To place your order, please <Link to="/login">Login</Link>{" "}
