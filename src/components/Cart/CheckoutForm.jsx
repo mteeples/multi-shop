@@ -2,9 +2,13 @@ import { Form, useActionData } from "react-router";
 import AddressFormGroup from "./AddressFormGroup";
 import CheckoutOrderSummary from "./CheckoutOrderSummary";
 import myAxios from "../../utils/db";
+import { useState } from "react";
 
 export default function CheckoutForm() {
   const actionData = useActionData();
+
+  const [shippingRequired, setShippingRequired] = useState(false);
+  const toggleShippingForm = () => setShippingRequired((req) => !req);
 
   // Note: I removed the create an account checkbox, since the user should be logged in already to checkout
   return (
@@ -15,13 +19,14 @@ export default function CheckoutForm() {
             <h5 className="section-title position-relative text-uppercase mb-3">
               <span className="bg-secondary pr-3">Billing Address</span>
             </h5>
-            <AddressFormGroup fieldPrefix="billing">
+            <AddressFormGroup fieldPrefix="billing" required={true}>
               <div className="col-md-12">
                 <div className="custom-control custom-checkbox">
                   <input
                     type="checkbox"
                     className="custom-control-input"
                     id="shipto"
+                    onChange={toggleShippingForm}
                   />
                   <label
                     className="custom-control-label"
@@ -38,7 +43,10 @@ export default function CheckoutForm() {
               <h5 className="section-title position-relative text-uppercase mb-3">
                 <span className="bg-secondary pr-3">Shipping Address</span>
               </h5>
-              <AddressFormGroup fieldPrefix="shipping" />
+              <AddressFormGroup
+                fieldPrefix="shipping"
+                required={shippingRequired}
+              />
             </div>
           </div>
           <div className="col-lg-4">
@@ -71,6 +79,7 @@ export default function CheckoutForm() {
                       className="custom-control-input"
                       name="payment"
                       id="directcheck"
+                      required
                     />
                     <label
                       className="custom-control-label"

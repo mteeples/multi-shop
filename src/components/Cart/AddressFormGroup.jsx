@@ -1,4 +1,4 @@
-export default function AddressFormGroup({ fieldPrefix, children }) {
+export default function AddressFormGroup({ fieldPrefix, children, required }) {
   return (
     <div className="bg-light p-30 mb-5">
       <div className="row">
@@ -9,6 +9,7 @@ export default function AddressFormGroup({ fieldPrefix, children }) {
             type="text"
             placeholder="John"
             name={`${fieldPrefix}FirstName`}
+            required={required}
           />
         </div>
         <div className="col-md-6 form-group">
@@ -18,6 +19,7 @@ export default function AddressFormGroup({ fieldPrefix, children }) {
             type="text"
             placeholder="Doe"
             name={`${fieldPrefix}LastName`}
+            required={required}
           />
         </div>
         <div className="col-md-6 form-group">
@@ -27,6 +29,7 @@ export default function AddressFormGroup({ fieldPrefix, children }) {
             type="text"
             placeholder="example@email.com"
             name={`${fieldPrefix}Email`}
+            required={required}
           />
         </div>
         <div className="col-md-6 form-group">
@@ -36,6 +39,7 @@ export default function AddressFormGroup({ fieldPrefix, children }) {
             type="text"
             placeholder="+123 456 789"
             name={`${fieldPrefix}PhoneNumber`}
+            required={required}
           />
         </div>
         <div className="col-md-6 form-group">
@@ -45,6 +49,7 @@ export default function AddressFormGroup({ fieldPrefix, children }) {
             type="text"
             placeholder="123 Street"
             name={`${fieldPrefix}AddressLine1`}
+            required={required}
           />
         </div>
         <div className="col-md-6 form-group">
@@ -54,6 +59,7 @@ export default function AddressFormGroup({ fieldPrefix, children }) {
             type="text"
             placeholder="123 Street"
             name={`${fieldPrefix}AddressLine2`}
+            required={required}
           />
         </div>
         <div className="col-md-6 form-group">
@@ -62,6 +68,7 @@ export default function AddressFormGroup({ fieldPrefix, children }) {
             defaultValue="United States"
             className="custom-select"
             name={`${fieldPrefix}Country`}
+            required={required}
           >
             <option>United States</option>
             <option>Afghanistan</option>
@@ -76,6 +83,7 @@ export default function AddressFormGroup({ fieldPrefix, children }) {
             type="text"
             placeholder="New York"
             name={`${fieldPrefix}City`}
+            required={required}
           />
         </div>
         <div className="col-md-6 form-group">
@@ -85,6 +93,7 @@ export default function AddressFormGroup({ fieldPrefix, children }) {
             type="text"
             placeholder="New York"
             name={`${fieldPrefix}State`}
+            required={required}
           />
         </div>
         <div className="col-md-6 form-group">
@@ -94,6 +103,7 @@ export default function AddressFormGroup({ fieldPrefix, children }) {
             type="text"
             placeholder="123"
             name={`${fieldPrefix}ZipCode`}
+            required={required}
           />
         </div>
         {children}
