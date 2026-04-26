@@ -2,6 +2,8 @@ import { Link } from "react-router";
 import { formatPrice } from "../../utils/formatPrice";
 import StarRating from "../Reviews/StarRating";
 import { calculateAvgRating } from "../../utils/calculateAvgRating";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../store/cart";
 
 function getFullPrice(price, discountPercentage) {
   const fullPrice = price / (1 - discountPercentage / 100);
@@ -17,15 +19,27 @@ export default function ProductTile({ product, ...props }) {
     reviews,
     id: productId,
   } = product;
+
+  const dispatch = useDispatch();
+
+  function addItemToCart() {
+    const item = { id: product.id, title, price, thumbnail, quantity: 1 };
+    dispatch(addItem({ item }));
+  }
+
   return (
     <div {...props}>
       <div className="product-item bg-light mb-4">
         <div className="product-img position-relative overflow-hidden">
           <img className="img-fluid w-100" src={thumbnail} alt={title} />
           <div className="product-action">
-            <a className="btn btn-outline-dark btn-square" href="/">
+            <Link
+              href="/"
+              onClick={addItemToCart}
+              className="btn btn-outline-dark btn-square"
+            >
               <i className="fa fa-shopping-cart"></i>
-            </a>
+            </Link>
             <a className="btn btn-outline-dark btn-square" href="/">
               <i className="far fa-heart"></i>
             </a>

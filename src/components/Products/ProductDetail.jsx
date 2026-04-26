@@ -2,10 +2,32 @@ import { useProducts } from "../../hooks/useProducts";
 import { formatPrice } from "../../utils/formatPrice";
 import StarRating from "../Reviews/StarRating";
 import { calculateAvgRating } from "../../utils/calculateAvgRating";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../../store/cart";
 
 export default function ProductDetail({ productId }) {
+  const items = useSelector((state) => state.cart.items);
+
   const { getProduct } = useProducts();
-  const { title, description, price, images, reviews } = getProduct(productId);
+  const { title, description, price, images, reviews, id, thumbnail } =
+    getProduct(productId);
+
+  const [quantity, setQuantity] = useState(1);
+
+  function incrementQty() {
+    setQuantity((qty) => qty + 1);
+  }
+
+  function decrementQty() {
+    setQuantity((qty) => (qty === 1 ? 1 : qty - 1));
+  }
+
+  const dispatch = useDispatch();
+  function addItemToCart() {
+    const item = { title, price, id, thumbnail, quantity };
+    dispatch(addItem({ item }));
+  }
 
   return (
     <div className="container-fluid pb-5">
@@ -186,23 +208,29 @@ export default function ProductDetail({ productId }) {
                 style={{ width: "130px" }}
               >
                 <div className="input-group-btn">
-                  <button className="btn btn-primary btn-minus">
+                  <button
+                    onClick={decrementQty}
+                    className="btn btn-primary btn-minus"
+                  >
                     <i className="fa fa-minus"></i>
                   </button>
                 </div>
                 <input
                   type="text"
                   className="form-control bg-secondary border-0 text-center"
-                  value="1"
+                  value={quantity}
                   readOnly
                 />
                 <div className="input-group-btn">
-                  <button className="btn btn-primary btn-plus">
+                  <button
+                    onClick={incrementQty}
+                    className="btn btn-primary btn-plus"
+                  >
                     <i className="fa fa-plus"></i>
                   </button>
                 </div>
               </div>
-              <button className="btn btn-primary px-3">
+              <button onClick={addItemToCart} className="btn btn-primary px-3">
                 <i className="fa fa-shopping-cart mr-1"></i> Add To Cart
               </button>
             </div>

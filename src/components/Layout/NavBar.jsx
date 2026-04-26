@@ -1,7 +1,10 @@
 import { NavLink, Link } from "react-router";
 import CategoryMenu from "../Categories/CategoryMenu";
+import { useCart } from "../../hooks/useCart";
 
 export default function NavBar() {
+  const { numItems } = useCart();
+
   return (
     <div className="container-fluid bg-dark mb-30">
       <div className="row px-xl-5">
@@ -52,13 +55,13 @@ export default function NavBar() {
                     0
                   </span>
                 </Link>
-                <Link to="/" className="btn px-0 ml-3">
+                <Link to="/cart" className="btn px-0 ml-3">
                   <i className="fas fa-shopping-cart text-primary"></i>
                   <span
                     className="badge text-secondary border border-secondary rounded-circle"
                     style={{ paddingBottom: "2px" }}
                   >
-                    0
+                    {numItems}
                   </span>
                 </Link>
               </div>
