@@ -9,8 +9,18 @@ export default function CartItem({ id, price, quantity, title, thumbnail }) {
   // Update the store with the buttons
   const dispatch = useDispatch();
   const handleDelete = () => dispatch(removeItem({ itemId: id }));
-  const handleMinus = () =>
-    dispatch(updateItemQuantity({ itemId: id, newQuantity: quantity - 1 }));
+  const handleMinus = () => {
+    if (quantity === 1) {
+      handleDelete();
+    } else {
+      dispatch(
+        updateItemQuantity({
+          itemId: id,
+          newQuantity: quantity === 0 ? 0 : quantity - 1,
+        }),
+      );
+    }
+  };
   const handlePlus = () =>
     dispatch(updateItemQuantity({ itemId: id, newQuantity: quantity + 1 }));
 
